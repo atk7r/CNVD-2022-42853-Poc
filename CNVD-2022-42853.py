@@ -44,6 +44,8 @@ class attack():
                     if result==True:
                         print("\033[33m[+]\033[0m" + "\033[33m{}\033[0m".format(
                             httpline) + "\033[33m is vulnerable! \033[0m")
+                        with open(outfile, "a") as f:
+                            f.writelines(httpline + "\n")
                     else:
                         print("\033[32m[-]\033[0m" + "\033[32m{}\033[0m".format(
                             httpline) + "\033[32m not vulnerable.\033[0m")
@@ -53,7 +55,7 @@ class attack():
                 print("\033[31m[x]\033[0m" + "\033[31m{}\033[0m".format(httpline) + "\033[31m error \033[0m")
 
 if (__name__ == "__main__"):
-    parser = argparse.ArgumentParser(description="CNVD-2022-42853 Poc by atk7r")
+    parser = argparse.ArgumentParser(description="CNVD-2022-42853 Poc by ccj")
     parser.add_argument(
         '-ip', '--ipaddress', type=str, metavar="",
         help='Please input url to scan.'
