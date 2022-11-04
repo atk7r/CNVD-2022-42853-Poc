@@ -45,4 +45,4 @@ python3 CNVD-2022-42853.py -f url.txt -o outfile.txt
 ```
 
 # 详情
-https://www.yuque.com/docs/share/b85f0859-2f78-44de-ad1c-2305a0fbca9e?# 《禅道16.5 SQL注入复现（含Poc）》
+https://www.yuque.com/docs/share/b85f0859-2f78-44de-ad1c-2305a0fbca9e?# 《禅道16.5 SQL注入复现》
