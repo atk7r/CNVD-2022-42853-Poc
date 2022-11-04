@@ -12,7 +12,7 @@
 python3 CNVD-2022-42853.py -h                                                                               
 usage: CNVD-2022-42853.py [-h] [-ip] [-f] [-o]
 
-CNVD-2022-42853 Poc by ccj
+CNVD-2022-42853 Poc by atk7r
 
 options:
   -h, --help          show this help message and exit
