@@ -16,26 +16,31 @@
 参数
 
 ```
-python3 CNVD-2022-42853.py -h                                                                               
-usage: CNVD-2022-42853.py [-h] [-ip] [-f] [-o]
+python3 CNVD-2022-42853.py -h
+
+usage: CNVD-2022-42853.py [-h] [-rh remote_host] [-f file_path] [-o outfile_path]
 
 CNVD-2022-42853 Poc by atk7r
 
 options:
-  -h, --help          show this help message and exit
-  -ip , --ipaddress   Please input url to scan.
-  -f , --file         Please input file path to scan.
-  -o , --outfile      Please input path for output file.
+  -h, --help            show this help message and exit
+  -rh remote_host, --rhost remote_host
+                        Please input host to scan.
+  -f file_path, --file file_path
+                        Please input file path to scan.
+  -o outfile_path, --outfile outfile_path
+                        Please input path for output file.
+
 ```
 
 单个扫描（一定要是ip或者域名，后面可以加端口）
 
 ```
-python3 CNVD-2022-42853.py -ip 192.168.0.1
-python3 CNVD-2022-42853.py -ip 192.168.0.1:8088
+python3 CNVD-2022-42853.py -rh 192.168.0.1
+python3 CNVD-2022-42853.py -rh 192.168.0.1:8088
 
-python3 CNVD-2022-42853.py -ip www.abc.com
-python3 CNVD-2022-42853.py -ip www.abc.com:8088
+python3 CNVD-2022-42853.py -rh www.abc.com
+python3 CNVD-2022-42853.py -rh www.abc.com:8088
 ```
 
 批量扫描（url.txt的内容一定要是ip或者域名，后面可以加端口）
