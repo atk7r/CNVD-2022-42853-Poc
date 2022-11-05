@@ -55,7 +55,7 @@ class attack():
                 print("\033[31m[x]\033[0m" + "\033[31m{}\033[0m".format(httpline) + "\033[31m error \033[0m")
 
 if (__name__ == "__main__"):
-    parser = argparse.ArgumentParser(description="CNVD-2022-42853 Poc by ccj")
+    parser = argparse.ArgumentParser(description="CNVD-2022-42853 Poc by atk7r")
     parser.add_argument(
         '-rh', '--rhost', type=str, metavar="remote_host",
         help='Please input host to scan.'
