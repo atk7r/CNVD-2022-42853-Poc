@@ -66,7 +66,7 @@ if (__name__ == "__main__"):
     )
     parser.add_argument(
         '-o', '--outfile', metavar="outfile_path",
-        help="Please input path for output file."
+        help="Please input path and filename for output file."
     )
     args = parser.parse_args()
     if args.rhost:
