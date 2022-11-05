@@ -57,15 +57,15 @@ class attack():
 if (__name__ == "__main__"):
     parser = argparse.ArgumentParser(description="CNVD-2022-42853 Poc by ccj")
     parser.add_argument(
-        '-rh', '--rhost', type=str,
+        '-rh', '--rhost', type=str, metavar="remote_host",
         help='Please input host to scan.'
     )
     parser.add_argument(
-        '-f', '--file', type=argparse.FileType('r'),
+        '-f', '--file', type=argparse.FileType('r'), metavar="file_path",
         help='Please input file path to scan.'
     )
     parser.add_argument(
-        '-o', '--outfile',
+        '-o', '--outfile', metavar="outfile_path",
         help="Please input path for output file."
     )
     args = parser.parse_args()
