@@ -25,9 +25,9 @@ class attack():
                 else:
                     print("\033[32m[-]\033[0m" + "\033[32m{}\033[0m".format(httpline) + "\033[32m not vulnerable.\033[0m")
             else:
-                print("\033[31m[x]\033[0m" + "\033[31m{}\033[0m".format(httpline) + "\033[31m error \033[0m")
+                print("\033[31m[x]\033[0m" + "\033[31m{}\033[0m".format(httpline) + "\033[31m error. \033[0m")
         except:
-            print("\033[31m[x]\033[0m" + "\033[31m{}\033[0m".format(httpline) + "\033[31m error \033[0m")
+            print("\033[31m[x]\033[0m" + "\033[31m{}\033[0m".format(httpline) + "\033[31m error. \033[0m")
 
     def attack_all(self, file, outfile):
         for line in file:
@@ -50,9 +50,9 @@ class attack():
                         print("\033[32m[-]\033[0m" + "\033[32m{}\033[0m".format(
                             httpline) + "\033[32m not vulnerable.\033[0m")
                 else:
-                    print("\033[31m[x]\033[0m" + "\033[31m{}\033[0m".format(httpline) + "\033[31m error \033[0m")
+                    print("\033[31m[x]\033[0m" + "\033[31m{}\033[0m".format(httpline) + "\033[31m error. \033[0m")
             except:
-                print("\033[31m[x]\033[0m" + "\033[31m{}\033[0m".format(httpline) + "\033[31m error \033[0m")
+                print("\033[31m[x]\033[0m" + "\033[31m{}\033[0m".format(httpline) + "\033[31m error. \033[0m")
 
 if (__name__ == "__main__"):
     parser = argparse.ArgumentParser(description="CNVD-2022-42853 Poc by atk7r")
