@@ -29,7 +29,7 @@ options:
   -f file_path, --file file_path
                         Please input file path to scan.
   -o outfile_path, --outfile outfile_path
-                        Please input path for output file.
+                        Please input path and filename for output file.
 
 ```
 
